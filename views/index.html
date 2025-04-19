@@ -69,7 +69,7 @@
   </form>
 
   <div class="file-list">
-    <h3>File yang Sudah Diupload:</h3>
+    <h3></h3>
     <div id="files"></div>
   </div>
 
@@ -91,7 +91,7 @@
       ).join('');
     })
     .catch(err => {
-      document.getElementById('files').innerHTML = "Gagal mengambil file.";
+      document.getElementById('files').innerHTML = "";
     });
 </script>
 </body>
