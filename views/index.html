@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload ke S3</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, sans-serif;
+      background-color: #ff7b00;
+      color: #000000;
+      text-align: center;
+      padding: 30px;
+    }
+
+    input[type="file"] {
+      margin: 20px;
+    }
+
+    .upload-btn {
+      background-color: #000000;
+      color: white;
+      padding: 12px 25px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .upload-btn:hover {
+      background-color: #000000;
+    }
+
+    .file-list {
+      background-color: #ff7b00;
+      padding: 20px;
+      border-radius: 15px;
+      display: inline-block;
+      margin-top: 30px;
+      border: 3px dashed #000000;
+    }
+
+    .file-list h3 {
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .file-item {
+      border-bottom: 1px dashed #60eaf4;
+      padding: 5px 0;
+      text-align: left;
+    }
+
+    .file-item::before {
+      content: '✨ ';
+    }
+  </style>
+</head>
+<body>
+  <h1>Latihan Quiz Upload ke S3</h1>
+  <p><strong>NRP:</strong> 152022041</p>
+  <p><strong>Nama:</strong> Asep Ginanjar</p>
+
+  <form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" required />
+    <br />
+    <button type="submit" class="upload-btn"> Upload!</button>
+  </form>
+
+  <div class="file-list">
+    <h3>File yang Sudah Diupload:</h3>
+    <div id="files"></div>
+  </div>
+
+  <script>
+    fetch('/list-files')
+      .then(res => res.json())
+      .then(files => {
+        const fileContainer = document.getElementById('files');
+        if (files.length === 0) {
+          fileContainer.innerHTML = "<em>Belum ada file</em>";
+          return;
+        }
+
+        fileContainer.innerHTML = files.map(file =>
+          `<div class="file-item">${file}</div>`
+        ).join('');
+      })
+      .catch(err => {
+        document.getElementById('files').innerHTML = "Gagal mengambil file.";
+      });
+  </script>
+</body>
+</html>
