@@ -74,22 +74,25 @@
   </div>
 
   <script>
-    fetch('/list-files')
-      .then(res => res.json())
-      .then(files => {
-        const fileContainer = document.getElementById('files');
-        if (files.length === 0) {
-          fileContainer.innerHTML = "<em>Belum ada file</em>";
-          return;
-        }
+  fetch('/list-files')
+    .then(res => res.json())
+    .then(files => {
+      const fileContainer = document.getElementById('files');
+      if (files.length === 0) {
+        fileContainer.innerHTML = "<em>Belum ada file</em>";
+        return;
+      }
 
-        fileContainer.innerHTML = files.map(file =>
-          `<div class="file-item">${file}</div>`
-        ).join('');
-      })
-      .catch(err => {
-        document.getElementById('files').innerHTML = "Gagal mengambil file.";
-      });
-  </script>
+      fileContainer.innerHTML = files.map(file =>
+        `<div class="file-item">
+          <strong>${file}</strong><br>
+          <img src="https://aspbucket-1.s3.ap-southeast-1.amazonaws.com/${file}" width="300" style="margin-top:10px; border-radius:10px;" />
+        </div>`
+      ).join('');
+    })
+    .catch(err => {
+      document.getElementById('files').innerHTML = "Gagal mengambil file.";
+    });
+</script>
 </body>
 </html>
