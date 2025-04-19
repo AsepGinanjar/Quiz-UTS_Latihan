@@ -38,16 +38,14 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Route untuk list file dari bucket
 app.get('/list-files', async (req, res) => {
-  const params = {
-    Bucket: 'aspbucket-1'
-  };
-
+  const params = { Bucket: 'aspbucket-1' };
   try {
     const data = await s3.listObjectsV2(params).promise();
+    console.log("S3 List Success:", data); // <--- Tambah ini
     const files = data.Contents.map(obj => obj.Key);
     res.json(files);
   } catch (err) {
-    console.error(err);
+    console.error("S3 List Error:", err); // <--- Tambah ini
     res.status(500).json({ error: 'Gagal mengambil daftar file' });
   }
 });
